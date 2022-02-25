@@ -54,4 +54,10 @@
       <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\LICENSE" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Areas\Community" />
+      <Folder Include="Areas\Memories" />
+      <Folder Include="Areas\Support" />
+    </ItemGroup>
+
 </Project>

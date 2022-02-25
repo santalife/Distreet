@@ -1,0 +1,57 @@
+﻿<nav class="navbar navbar-expand-lg navbar-light bg-primary" id="topbar">
+    <div class="container">
+        @* <a class="navbar-brand" href="#"><img src="~/img/Logo_white.png" width="130px" height="19.96px"/></a> *@
+        <a class="navbar-brand" asp-area="" asp-page="Index">
+            <span class="navbar-text" style="font-weight: 800">Distreet</span>
+        </a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="">
+            <ul class="navbar-nav mr-auto ml-auto">
+                <li class="nav-item ms-5">
+                    <div class="form-group has-search">
+                        <span class="fas fa-search form-control-feedback"></span>
+                        <input type="text" class="form-control" id="searchbar" placeholder="Search Distreet">
+                    </div>
+                </li>
+
+                <li class="nav-item ms-6">
+                    <div class="btn-group">
+                        <button type="button" class="btn bg-transparent dropdown-toggle navbar-text" id="helpBtn" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-info-circle"></i>
+                            Help
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-macos mx-0 shadow">
+                            <li>
+                                <a class="dropdown-item" href="#"><i class="fas fa-book-open"></i> Onboarding Library</a>
+                            </li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="#">Separated link</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
+                <li class="nav-item ms-3">
+                    <button type="button" class="btn btn-secondary navbar-text" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom"><i class="fas fa-map"></i> Map</button>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+</nav>
+
+<div class="offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasBottom" aria-labelledby="offcanvasBottomLabel">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasBottomLabel">Offcanvas bottom</h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body small">
+        ...
+    </div>
+</div>
