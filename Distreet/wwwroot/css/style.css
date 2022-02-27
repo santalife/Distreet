@@ -11652,7 +11652,7 @@ textarea.form-control-lg {
   background-color: var(--bs-light);
 }
 
-.card {
+.events-card {
   border-radius: 4px;
   background: #fff;
   box-shadow: 0 6px 10px rgba(0, 0, 0, 0.08), 0 0 6px rgba(0, 0, 0, 0.05);
@@ -11660,9 +11660,66 @@ textarea.form-control-lg {
   cursor: pointer;
 }
 
-.card:hover {
+.events-card:hover {
   transform: scale(1.05);
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12), 0 4px 8px rgba(0, 0, 0, 0.06);
+}
+
+.profile-img {
+  width: 168px;
+  height: 168px;
+}
+
+.intro-title {
+  font-weight: 750;
+}
+
+.input-profile-img {
+  width: 38px;
+  height: 38px;
+}
+
+.posting-text {
+  font-weight: 750;
+}
+
+.photo-btn {
+  color: #f14668;
+}
+
+.memories-btn {
+  color: #52B69A;
+}
+
+.gathering-btn {
+  color: #168AAD;
+}
+
+.posts-username {
+  font-weight: 550;
+}
+
+.like-btn {
+  color: #f14668;
+  font-weight: 550;
+}
+
+.comment-btn {
+  color: #52B69A;
+  font-weight: 550;
+}
+
+.share-btn {
+  color: #168AAD;
+  font-weight: 550;
+}
+
+.post-btn-section .nav-pills .like-btn .nav-link {
+  color: #f14668;
+}
+
+.post-btn-section .nav-pills .nav-link.active {
+  background-color: #f14668;
 }
 
 body {
