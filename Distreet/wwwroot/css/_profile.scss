@@ -49,6 +49,20 @@
   background-color: $danger;
 }
 
-.post-date-header{
-  
+#friends-searchbar{
+  padding-left: 2.375rem;
+}
+
+.photos-images{
+  object-fit: cover; /* Do not scale the image */
+  //object-position: center; /* Center the image within the element */
+  width: 100%;
+  height: 100%;
+  max-width: 190.66px;
+  max-height: 190.66px;
+
+}
+
+.overview-icon{
+  width: 32px;
 }

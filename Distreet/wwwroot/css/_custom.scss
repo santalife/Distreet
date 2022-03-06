@@ -26,9 +26,11 @@ $offcanvas-vertical-height: 95vh;
 @import "dropdown";
 @import "events";
 @import "profile";
+@import "login";
 
 body{
   font-family: 'Nunito', sans-serif;
+  background-color: #f5f5f5;
 }
 
 .navbar-text {
@@ -36,9 +38,9 @@ body{
   font-weight: 700;
 }
 
-.has-search .form-control {
+#searchbar {
   padding-left: 2.375rem;
-  width: 800px;
+  //width: 800px;
 }
 
 .has-search .form-control-feedback {
