@@ -11678,6 +11678,11 @@ textarea.form-control-lg {
   height: 100%;
 }
 
+.event-anchor, .event-anchor:hover {
+  text-decoration: none;
+  color: inherit;
+}
+
 .profile-img {
   width: 168px;
   height: 168px;

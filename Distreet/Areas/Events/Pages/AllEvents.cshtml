@@ -15,10 +15,10 @@
 <h2 class="mb-5 fw-bold">All Events</h2>
 
 <div class="row g-3 mb-5">
-    <div class="col-md-auto">
+    <div class="col-md-1">
         <span class="fs-4">Type:</span>
     </div>
-    <div class="col-md-10">
+    <div class="col-md-11">
         <div class="row g-3">
             <div class="col-auto">
                 <a class="btn btn-primary rounded-pill event-type-filter">All types</a>
@@ -60,7 +60,7 @@
     </div>
 </div>
 <div class="row g-3 mb-5">
-    <div class="col-md-auto">
+    <div class="col-md-1">
         <span class="fs-4">Date:</span>
     </div>
 
@@ -68,7 +68,7 @@
         <a class="btn btn-primary rounded-pill event-type-filter">All dates</a>
     </div>
     <div class="col-auto">
-        <a class="btn btn-outline-primary rounded-pill event-type-filter"><i class="fas fa-calendar-alt"></i> Select dates</a>
+        <input type="date" class="btn btn-outline-primary rounded-pill event-type-filter"/>
     </div>
     <div class="col-auto">
         <a class="btn btn-outline-primary rounded-pill event-type-filter">Today</a>
@@ -103,101 +103,111 @@
     <div class="col">
         <div class="card events-card" style="">
             @* <img src="..." class="card-img-top" alt="..."> *@
-            <div class="row g-0">
-                <div class="col-md-4">
-                    <img src="~/img/carousel1.jpg" class="img-fluid rounded-start event-card-image" alt="...">
-                </div>
-                <div class="col-md-8">
-                    <div class="card-body">
-                        <h6 class="card-title text-info">Concert</h6>
-                        <h5 class="card-title fw-bold">Four Decades of Hits</h5>
-                        <p class="card-text text-muted">13 Jun(Mon)</p>
-                        <span class="badge rounded-pill bg-light text-dark">Classical</span>
-                        <span class="badge rounded-pill bg-light text-dark">Performance</span>
-                        <h5 class="card-title fw-bold mt-5 mb-0">S$13.00</h5>
+            <a asp-area="Events" asp-page="EventDetails" class="event-anchor" style="">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <img src="~/img/carousel1.jpg" class="img-fluid rounded-start event-card-image" alt="...">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h6 class="card-title text-info">Concert</h6>
+                            <h5 class="card-title fw-bold">Four Decades of Hits</h5>
+                            <p class="card-text text-muted">13 Jun(Mon)</p>
+                            <span class="badge rounded-pill bg-light text-dark">Classical</span>
+                            <span class="badge rounded-pill bg-light text-dark">Performance</span>
+                            <h5 class="card-title fw-bold mt-5 mb-0 text-success">Free</h5>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </a>
+        </div>
+    </div>
+    <div class="col">
+        <div class="card events-card" style="">
+            <a asp-area="Events" asp-page="EventDetails" class="event-anchor" style="">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <img src="~/img/carousel1.jpg" class="img-fluid rounded-start event-card-image" alt="...">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h6 class="card-title text-info">Concert</h6>
+                            <h5 class="card-title fw-bold">Four Decades of Hits</h5>
+                            <p class="card-text text-muted">13 Jun(Mon)</p>
+                            <span class="badge rounded-pill bg-light text-dark">Classical</span>
+                            <span class="badge rounded-pill bg-light text-dark">Performance</span>
+                            <h5 class="card-title fw-bold mt-5 mb-0 text-success">Free</h5>
+                        </div>
+                    </div>
+                </div>
+            </a>
+            @* <img src="..." class="card-img-top" alt="..."> *@
         </div>
     </div>
     <div class="col">
         <div class="card events-card" style="">
             @* <img src="..." class="card-img-top" alt="..."> *@
-            <div class="row g-0">
-                <div class="col-md-4">
-                    <img src="~/img/carousel1.jpg" class="img-fluid rounded-start event-card-image" alt="...">
-                </div>
-                <div class="col-md-8">
-                    <div class="card-body">
-                        <h6 class="card-title text-info">Concert</h6>
-                        <h5 class="card-title fw-bold">Four Decades of Hits</h5>
-                        <p class="card-text text-muted">13 Jun(Mon)</p>
-                        <span class="badge rounded-pill bg-light text-dark">Classical</span>
-                        <span class="badge rounded-pill bg-light text-dark">Performance</span>
-                        <h5 class="card-title fw-bold mt-5 mb-0 text-success">Free</h5>
+            <a asp-area="Events" asp-page="EventDetails" class="event-anchor" style="">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <img src="~/img/carousel1.jpg" class="img-fluid rounded-start event-card-image" alt="...">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h6 class="card-title text-info">Concert</h6>
+                            <h5 class="card-title fw-bold">Four Decades of Hits</h5>
+                            <p class="card-text text-muted">13 Jun(Mon)</p>
+                            <span class="badge rounded-pill bg-light text-dark">Classical</span>
+                            <span class="badge rounded-pill bg-light text-dark">Performance</span>
+                            <h5 class="card-title fw-bold mt-5 mb-0 text-success">Free</h5>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </a>
         </div>
     </div>
     <div class="col">
         <div class="card events-card" style="">
             @* <img src="..." class="card-img-top" alt="..."> *@
-            <div class="row g-0">
-                <div class="col-md-4">
-                    <img src="~/img/carousel1.jpg" class="img-fluid rounded-start event-card-image" alt="...">
-                </div>
-                <div class="col-md-8">
-                    <div class="card-body">
-                        <h6 class="card-title text-info">Concert</h6>
-                        <h5 class="card-title fw-bold">Four Decades of Hits</h5>
-                        <p class="card-text text-muted">13 Jun(Mon)</p>
-                        <span class="badge rounded-pill bg-light text-dark">Classical</span>
-                        <span class="badge rounded-pill bg-light text-dark">Performance</span>
-                        <h5 class="card-title fw-bold mt-5 mb-0">S$13.00</h5>
+            <a asp-area="Events" asp-page="EventDetails" class="event-anchor" style="">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <img src="~/img/carousel1.jpg" class="img-fluid rounded-start event-card-image" alt="...">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h6 class="card-title text-info">Concert</h6>
+                            <h5 class="card-title fw-bold">Four Decades of Hits</h5>
+                            <p class="card-text text-muted">13 Jun(Mon)</p>
+                            <span class="badge rounded-pill bg-light text-dark">Classical</span>
+                            <span class="badge rounded-pill bg-light text-dark">Performance</span>
+                            <h5 class="card-title fw-bold mt-5 mb-0 text-success">Free</h5>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </a>
         </div>
     </div>
     <div class="col">
         <div class="card events-card" style="">
             @* <img src="..." class="card-img-top" alt="..."> *@
-            <div class="row g-0">
-                <div class="col-md-4">
-                    <img src="~/img/carousel1.jpg" class="img-fluid rounded-start event-card-image" alt="...">
-                </div>
-                <div class="col-md-8">
-                    <div class="card-body">
-                        <h6 class="card-title text-info">Concert</h6>
-                        <h5 class="card-title fw-bold">Four Decades of Hits</h5>
-                        <p class="card-text text-muted">13 Jun(Mon)</p>
-                        <span class="badge rounded-pill bg-light text-dark">Classical</span>
-                        <span class="badge rounded-pill bg-light text-dark">Performance</span>
-                        <h5 class="card-title fw-bold mt-5 mb-0">S$13.00</h5>
+            <a asp-area="Events" asp-page="EventDetails" class="event-anchor" style="">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <img src="~/img/carousel1.jpg" class="img-fluid rounded-start event-card-image" alt="...">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h6 class="card-title text-info">Concert</h6>
+                            <h5 class="card-title fw-bold">Four Decades of Hits</h5>
+                            <p class="card-text text-muted">13 Jun(Mon)</p>
+                            <span class="badge rounded-pill bg-light text-dark">Classical</span>
+                            <span class="badge rounded-pill bg-light text-dark">Performance</span>
+                            <h5 class="card-title fw-bold mt-5 mb-0 text-success">Free</h5>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
-    <div class="col">
-        <div class="card events-card" style="">
-            @* <img src="..." class="card-img-top" alt="..."> *@
-            <div class="row g-0">
-                <div class="col-md-4">
-                    <img src="~/img/carousel1.jpg" class="img-fluid rounded-start event-card-image" alt="...">
-                </div>
-                <div class="col-md-8">
-                    <div class="card-body">
-                        <h6 class="card-title text-info">Concert</h6>
-                        <h5 class="card-title fw-bold">Four Decades of Hits</h5>
-                        <p class="card-text text-muted">13 Jun(Mon)</p>
-                        <span class="badge rounded-pill bg-light text-dark">Classical</span>
-                        <span class="badge rounded-pill bg-light text-dark">Performance</span>
-                        <h5 class="card-title fw-bold mt-5 mb-0">S$13.00</h5>
-                    </div>
-                </div>
-            </div>
+            </a>
         </div>
     </div>
 </div>
