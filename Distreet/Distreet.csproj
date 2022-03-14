@@ -74,6 +74,7 @@
       <Content Include="wwwroot\lib\filepond-master\.github\ISSUE_TEMPLATE\bug_report.yml" />
       <Content Include="wwwroot\lib\filepond-master\.github\ISSUE_TEMPLATE\config.yml" />
       <Content Include="wwwroot\lib\filepond-master\.github\ISSUE_TEMPLATE\feature_request.yml" />
+      <Content Remove="Areas\Identity\**" />
     </ItemGroup>
 
     <ItemGroup>
@@ -92,6 +93,18 @@
         <PrivateAssets>all</PrivateAssets>
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       </PackageReference>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Remove="Areas\Identity\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Remove="Areas\Identity\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="Areas\Identity\**" />
     </ItemGroup>
 
 </Project>
