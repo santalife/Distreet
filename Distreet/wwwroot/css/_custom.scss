@@ -70,3 +70,10 @@ body{
   vertical-align: 0; /* to center vertically */
 }
 
+.bd-callout{
+  margin-top: 1.25rem;
+  margin-bottom: 1.25rem;
+  border-left: 1px solid $primary;
+  border-left-width: 6px;
+  border-radius: 0.25rem;
+}

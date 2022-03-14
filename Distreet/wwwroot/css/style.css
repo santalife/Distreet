@@ -11683,6 +11683,14 @@ textarea.form-control-lg {
   color: inherit;
 }
 
+.events-icon {
+  font-size: 1.5rem;
+}
+
+#price-card.sticky-top {
+  top: 85px;
+}
+
 .profile-img {
   width: 168px;
   height: 168px;
@@ -11824,6 +11832,14 @@ body {
   /* the desired FontAwesome icon */
   vertical-align: 0;
   /* to center vertically */
+}
+
+.bd-callout {
+  margin-top: 1.25rem;
+  margin-bottom: 1.25rem;
+  border-left: 1px solid #a4b494;
+  border-left-width: 6px;
+  border-radius: 0.25rem;
 }
 
 /*# sourceMappingURL=style.css.map */
