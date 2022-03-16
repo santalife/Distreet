@@ -1,20 +1,21 @@
 ﻿@page
+@using Distreet.Models.User
 @model Distreet.Areas.Identity.Pages.Account.Profile
 
 @{
-    Layout = "_RegisterLayout";
+    Layout = "_NormalLayout";
 }
 
 <div class="profile-header">
     <div class="row">
         <div class="col d-flex align-items-center justify-content-center">
-            <img src="~/img/yanz.jpg" class="rounded float-start profile-img rounded-circle" alt="...">
+            <img src="@Model.ApplicationUser.ProfilePicture" class="rounded float-start profile-img rounded-circle" alt="...">
         </div>
     </div>
 
     <div class="row mt-4">
         <div class="col d-flex align-items-center justify-content-center">
-            <h2 class="mx-auto">黄梓妍</h2>
+            <h2 class="mx-auto">@Model.ApplicationUser.UserName</h2>
         </div>
     </div>
 

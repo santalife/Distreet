@@ -9,7 +9,7 @@
         if (SignInManager.IsSignedIn(User))
         {
             <div class="btn btn-outline-secondary border-0 rounded-pill pt-0 pb-0 px-2 pe-3">
-                <a asp-area="Identity" asp-page="/Account/Profile" class="text-black text-decoration-none d-flex align-items-center" id="dropdownUser1" aria-expanded="false">
+                <a asp-area="Identity" asp-page="/Account/Profile" asp-route-residentId="@user.UserName" class="text-black text-decoration-none d-flex align-items-center" id="dropdownUser1" aria-expanded="false">
                     <img src="@user.ProfilePicture" alt="mdo" width="30" height="30" class="rounded-circle me-2">
                     <span class="navbar-text">@user.UserName</span>
                 </a>
