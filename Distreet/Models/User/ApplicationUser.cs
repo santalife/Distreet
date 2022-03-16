@@ -8,8 +8,6 @@ public class ApplicationUser: IdentityUser
     
     public DateTime DateOfBirth { get; set; }
     
-    public int MobileNumber { get; set; }
-    
     public string? Status { get; set; }
     
     public int PointsEarned { get; set; }

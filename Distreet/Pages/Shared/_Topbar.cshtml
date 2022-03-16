@@ -1,7 +1,7 @@
 ﻿<nav class="navbar navbar-expand-lg navbar-light bg-primary" id="topbar">
     <div class="container">
         @* <a class="navbar-brand" href="#"><img src="~/img/Logo_white.png" width="130px" height="19.96px"/></a> *@
-        <a class="navbar-brand" asp-area="" asp-page="Index">
+        <a class="navbar-brand" href="/">
             <span class="navbar-text" style="font-weight: 800">Distreet</span>
         </a>
         
@@ -54,9 +54,7 @@
                     <button type="button" class="btn btn-secondary navbar-text me-2" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom"><i class="fas fa-map"></i> Map</button>
                 </li>
                 
-                <li class="nav-item">
-                    <a class="btn btn-secondary navbar-text" asp-area="Users" asp-page="Login"><i class="fas fa-sign-in-alt"></i> Login</a>
-                </li>
+                <partial name="_LoginPartial"/>
             </ul>
         </div>
 
