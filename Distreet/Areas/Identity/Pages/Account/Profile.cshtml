@@ -1,9 +1,12 @@
-﻿@page
+﻿@page "/{residentid}"
 @using Distreet.Models.User
 @model Distreet.Areas.Identity.Pages.Account.Profile
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
 
 @{
     Layout = "_NormalLayout";
+    var user = await UserManager.GetUserAsync(User);
 }
 
 <div class="profile-header">
@@ -51,248 +54,288 @@
 <div class="tab-content" id="pills-tabContent">
 <div class="tab-pane fade show active" id="pills-posts" role="tabpanel" aria-labelledby="pills-posts-tab">
 @* Status Input *@
-<div class="row">
-    <div class="col-5">
-        <div class="card shadow border-0">
-            <div class="card-body p-4">
-                <h4 class="card-title intro-title">Intro</h4>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            </div>
+<div class="row g-3 mb-3">
+<div class="col-5">
+    <div class="card shadow border-0">
+        <div class="card-body p-4">
+            <h4 class="card-title intro-title">Intro</h4>
+            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
         </div>
     </div>
+</div>
+<div class="col-7">
+    <div class="card shadow border-0">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-1">
+                    <img src="@Model.ApplicationUser.ProfilePicture" class="input-profile-img rounded float-start rounded-circle"/>
+                </div>
+                <div class="col-11 ps-0">
+                    <form method="post">
+                        <input type="text" class="form-control" placeholder="What's on your mind?" asp-for="Input.PostContent"/>
+                        <input type="hidden" value="Standard" asp-for="Input.PostType"/>
+                        <input type="submit" hidden/>
+                    </form>
+                </div>
+            </div>
+            <hr/>
+            <ul class="nav justify-content-center">
+                <li class="nav-item">
+                    <a class="nav-link posting-text photo-btn" href="#"><i class="fas fa-photo-video"></i> Photo/Video</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link posting-text memories-btn" href="#"><i class="fas fa-stars"></i> Memories</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link posting-text gathering-btn" href="#"><i class="fas fa-users"></i> Gathering</a>
+                </li>
+            </ul>
 
-    <div class="col-7">
-        <div class="card shadow border-0">
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-1">
-                        <img src="~/img/yanz.jpg" class="input-profile-img rounded float-start rounded-circle"/>
+        </div>
+    </div>
+</div>
+
+@{
+    foreach (var post in Model.UserPosts)
+    {
+        <div class="col-7 offset-md-5">
+            <div class="card shadow border-0">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-1">
+                            <img src="@post.ApplicationUser.ProfilePicture" class="input-profile-img rounded float-start rounded-circle"/>
+                        </div>
+                        <div class="col-11 ps-0">
+                            <h5 class="posts-username mb-0">@post.ApplicationUser.UserName</h5>
+                            <h6 class="text-muted post-date-header">November 9, 2019</h6>
+                        </div>
                     </div>
-                    <div class="col-11 ps-0">
-                        <input type="text" class="form-control" placeholder="What's on your mind?"/>
+
+                    <div class="row mt-1">
+                        <div class="col">
+                            <p class="mb-0 fs-4">
+                                @post.PostContent
+                            </p>
+                        </div>
                     </div>
                 </div>
-                <hr/>
-                <ul class="nav justify-content-center">
+                <div class="card-body border-top border-top px-0 ms-3 me-3">
+                    <div class="post-btn-section">
+                        <ul class="nav nav-pills nav-justified">
+                            <li class="nav-item">
+                                <a class="btn btn-outline-danger w-100 border-0 fw-bold" aria-current="page" href="#"><i class="fas fa-thumbs-up"></i> Like</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="btn btn-outline-success w-100 border-0 fw-bold" href="#"><i class="fas fa-comment-alt-dots"></i> Comment</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="btn btn-outline-info w-100 border-0 fw-bold" href="#"><i class="fas fa-share"></i> Share</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card-body border-top px-0 ms-3 me-3">
+                    <div class="row">
+                        <div class="col-1">
+                            <img src="@user.ProfilePicture" class="input-profile-img rounded float-start rounded-circle"/>
+                        </div>
+                        <div class="col-11 ps-0">
+                            <input type="text" class="form-control" placeholder="What's on your mind?"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+}
+
+
+@* Picture *@
+<div class="col-7 offset-md-5">
+    <div class="card shadow border-0">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-1">
+                    <img src="~/img/yanz.jpg" class="input-profile-img rounded float-start rounded-circle"/>
+                </div>
+                <div class="col-11 ps-0">
+                    <h5 class="posts-username mb-0">黄梓妍</h5>
+                    <h6 class="text-muted">November 9, 2019</h6>
+                </div>
+            </div>
+        </div>
+        <img src="~/img/yanz.jpg" class="card-img-bottom" alt="...">
+        <div class="card-body border-top">
+            <div class="posts-btn-section">
+                <ul class="nav nav-pills nav-justified">
                     <li class="nav-item">
-                        <a class="nav-link posting-text photo-btn" href="#"><i class="fas fa-photo-video"></i> Photo/Video</a>
+                        <a class="btn btn-outline-danger w-100 border-0 fw-bold" aria-current="page" href="#"><i class="fas fa-thumbs-up"></i> Like</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link posting-text memories-btn" href="#"><i class="fas fa-stars"></i> Memories</a>
+                        <a class="btn btn-outline-success w-100 border-0 fw-bold" href="#"><i class="fas fa-comment-alt-dots"></i> Comment</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link posting-text gathering-btn" href="#"><i class="fas fa-users"></i> Gathering</a>
+                        <a class="btn btn-outline-info w-100 border-0 fw-bold" href="#"><i class="fas fa-share"></i> Share</a>
                     </li>
                 </ul>
-
+            </div>
+        </div>
+        <div class="card-body border-top px-0 ms-3 me-3">
+            <div class="row">
+                <div class="col-1">
+                    <img src="~/img/yanz.jpg" class="input-profile-img rounded float-start rounded-circle"/>
+                </div>
+                <div class="col-11 ps-0">
+                    <input type="text" class="form-control" placeholder="What's on your mind?"/>
+                </div>
             </div>
         </div>
     </div>
+</div>
+@* Picture *@
+<div class="col-7 offset-md-5">
+    <div class="card shadow border-0">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-1">
+                    <img src="~/img/yanz.jpg" class="input-profile-img rounded float-start rounded-circle"/>
+                </div>
+                <div class="col-11 ps-0">
+                    <h5 class="posts-username mb-0">黄梓妍</h5>
+                    <h6 class="text-muted post-date-header">November 9, 2019</h6>
+                </div>
+            </div>
+        </div>
+        <img src="~/img/yanz.jpg" class="card-img-bottom" alt="...">
+        <div class="card-body">
+            <div class="post-btn-section">
+                <ul class="nav nav-pills nav-justified">
+                    <li class="nav-item">
+                        <a class="btn btn-outline-danger w-100 border-0 fw-bold" aria-current="page" href="#"><i class="fas fa-thumbs-up"></i> Like</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-outline-success w-100 border-0 fw-bold" href="#"><i class="fas fa-comment-alt-dots"></i> Comment</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-outline-info w-100 border-0 fw-bold" href="#"><i class="fas fa-share"></i> Share</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="card-body border-top px-0 ms-3 me-3">
+            <div class="row">
+                <div class="col-1">
+                    <img src="~/img/yanz.jpg" class="input-profile-img rounded float-start rounded-circle"/>
+                </div>
+                <div class="col-11 ps-0">
+                    <input type="text" class="form-control" placeholder="What's on your mind?"/>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@* Gathering *@
+<div class="col-7 offset-md-5">
+    <div class="card shadow border-0">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-1">
+                    <img src="~/img/yanz.jpg" class="input-profile-img rounded float-start rounded-circle"/>
+                </div>
+                <div class="col-11 ps-0">
+                    <h5 class="posts-username mb-0">黄梓妍 <span class="fs-6 fw-normal">posted an gathering to be held on 19 Dec 2022</span></h5>
+                    <h6 class="text-muted post-date-header">November 9, 2019</h6>
+                </div>
+            </div>
+
+            <div class="row mt-1">
+                <div class="col">
+                    <p class="mb-0 fs-4">
+                        Mahjong @@ Ubi Block 325 #16-2741 Singapore 400011. Anyone keen do join!
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="card-body border-top px-0 ms-3 me-3">
+            <div class="post-btn-section">
+                <ul class="nav nav-pills nav-justified">
+                    <li class="nav-item">
+                        <a class="btn btn-outline-danger w-100 border-0 fw-bold" aria-current="page" href="#"><i class="fas fa-thumbs-up"></i> Like</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-outline-success w-100 border-0 fw-bold" href="#"><i class="fas fa-comment-alt-dots"></i> Comment</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-outline-info w-100 border-0 fw-bold" href="#"><i class="fas fa-share"></i> Share</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="card-body border-top px-0 ms-3 me-3">
+            <div class="row">
+                <div class="col-1">
+                    <img src="~/img/yanz.jpg" class="input-profile-img rounded float-start rounded-circle"/>
+                </div>
+                <div class="col-11 ps-0">
+                    <input type="text" class="form-control" placeholder="What's on your mind?"/>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+@* Standard *@
+<div class="col-7 offset-md-5">
+    <div class="card shadow border-0">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-1">
+                    <img src="~/img/yanz.jpg" class="input-profile-img rounded float-start rounded-circle"/>
+                </div>
+                <div class="col-11 ps-0">
+                    <h5 class="posts-username mb-0">黄梓妍</h5>
+                    <h6 class="text-muted post-date-header">November 9, 2019</h6>
+                </div>
+            </div>
+
+            <div class="row mt-1">
+                <div class="col">
+                    <p class="mb-0 fs-4">
+                        I am so happy to be here.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="card-body border-top border-top px-0 ms-3 me-3">
+            <div class="post-btn-section">
+                <ul class="nav nav-pills nav-justified">
+                    <li class="nav-item">
+                        <a class="btn btn-outline-danger w-100 border-0 fw-bold" aria-current="page" href="#"><i class="fas fa-thumbs-up"></i> Like</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-outline-success w-100 border-0 fw-bold" href="#"><i class="fas fa-comment-alt-dots"></i> Comment</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-outline-info w-100 border-0 fw-bold" href="#"><i class="fas fa-share"></i> Share</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="card-body border-top px-0 ms-3 me-3">
+            <div class="row">
+                <div class="col-1">
+                    <img src="~/img/yanz.jpg" class="input-profile-img rounded float-start rounded-circle"/>
+                </div>
+                <div class="col-11 ps-0">
+                    <input type="text" class="form-control" placeholder="What's on your mind?"/>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 </div>
 @* Status Input End *@
 
-<div class="row mt-3">
-    <div class="col-5">
-
-    </div>
-    <div class="col-7">
-        <div class="card shadow border-0">
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-1">
-                        <img src="~/img/yanz.jpg" class="input-profile-img rounded float-start rounded-circle"/>
-                    </div>
-                    <div class="col-11 ps-0">
-                        <h5 class="posts-username mb-0">黄梓妍</h5>
-                        <h6 class="text-muted">November 9, 2019</h6>
-                    </div>
-                </div>
-            </div>
-            <img src="~/img/yanz.jpg" class="card-img-bottom" alt="...">
-            <div class="card-body border-top">
-                <div class="posts-btn-section">
-                    <ul class="nav nav-pills nav-justified">
-                        <li class="nav-item">
-                            <a class="like-btn nav-link" aria-current="page" href="#"><i class="fas fa-thumbs-up"></i> Like</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link comment-btn" href="#"><i class="fas fa-comment-alt-dots"></i> Comment</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link share-btn" href="#"><i class="fas fa-share"></i> Share</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="card-body border-top px-0 ms-3 me-3">
-                <div class="row">
-                    <div class="col-1">
-                        <img src="~/img/yanz.jpg" class="input-profile-img rounded float-start rounded-circle"/>
-                    </div>
-                    <div class="col-11 ps-0">
-                        <input type="text" class="form-control" placeholder="What's on your mind?"/>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="row mt-3">
-    <div class="col-5">
-
-    </div>
-    <div class="col-7">
-        <div class="card shadow border-0">
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-1">
-                        <img src="~/img/yanz.jpg" class="input-profile-img rounded float-start rounded-circle"/>
-                    </div>
-                    <div class="col-11 ps-0">
-                        <h5 class="posts-username mb-0">黄梓妍</h5>
-                        <h6 class="text-muted post-date-header">November 9, 2019</h6>
-                    </div>
-                </div>
-            </div>
-            <img src="~/img/yanz.jpg" class="card-img-bottom" alt="...">
-            <div class="card-body">
-                <div class="post-btn-section">
-                    <ul class="nav nav-pills nav-justified">
-                        <li class="nav-item">
-                            <a class="like-btn nav-link active" aria-current="page" href="#"><i class="fas fa-thumbs-up"></i> Liked</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link comment-btn" href="#"><i class="fas fa-comment-alt-dots"></i> Comment</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link share-btn" href="#"><i class="fas fa-share"></i> Share</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="card-body border-top px-0 ms-3 me-3">
-                <div class="row">
-                    <div class="col-1">
-                        <img src="~/img/yanz.jpg" class="input-profile-img rounded float-start rounded-circle"/>
-                    </div>
-                    <div class="col-11 ps-0">
-                        <input type="text" class="form-control" placeholder="What's on your mind?"/>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="row mt-3">
-    <div class="col-5">
-
-    </div>
-    <div class="col-7">
-        <div class="card shadow border-0">
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-1">
-                        <img src="~/img/yanz.jpg" class="input-profile-img rounded float-start rounded-circle"/>
-                    </div>
-                    <div class="col-11 ps-0">
-                        <h5 class="posts-username mb-0">黄梓妍 <span class="fs-6 fw-normal">posted an gathering to be held on 19 Dec 2022</span></h5>
-                        <h6 class="text-muted post-date-header">November 9, 2019</h6>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col">
-                        <p class="mb-0 fs-4">
-                            Mahjong @@ Ubi Block 325 #16-2741 Singapore 400011. Anyone keen do join!
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <div class="card-body border-top px-0 ms-3 me-3">
-                <div class="post-btn-section">
-                    <ul class="nav nav-pills nav-justified">
-                        <li class="nav-item">
-                            <a class="like-btn nav-link active" aria-current="page" href="#"><i class="fas fa-walking"></i> Joined</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link comment-btn" href="#"><i class="fas fa-comment-alt-dots"></i> Comment</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link share-btn" href="#"><i class="fas fa-share"></i> Share</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="card-body border-top px-0 ms-3 me-3">
-                <div class="row">
-                    <div class="col-1">
-                        <img src="~/img/yanz.jpg" class="input-profile-img rounded float-start rounded-circle"/>
-                    </div>
-                    <div class="col-11 ps-0">
-                        <input type="text" class="form-control" placeholder="What's on your mind?"/>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </div>
-</div>
-
-<div class="row mt-3">
-    <div class="col-5">
-
-    </div>
-    <div class="col-7">
-        <div class="card shadow border-0">
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-1">
-                        <img src="~/img/yanz.jpg" class="input-profile-img rounded float-start rounded-circle"/>
-                    </div>
-                    <div class="col-11 ps-0">
-                        <h5 class="posts-username mb-0">黄梓妍</h5>
-                        <h6 class="text-muted post-date-header">November 9, 2019</h6>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col">
-                        <p class="mb-0 fs-4">
-                            I am so happy to be here.
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <div class="card-body border-top border-top px-0 ms-3 me-3">
-                <div class="post-btn-section">
-                    <ul class="nav nav-pills nav-justified">
-                        <li class="nav-item">
-                            <a class="like-btn nav-link active" aria-current="page" href="#"><i class="fas fa-thumbs-up"></i> Liked</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link comment-btn" href="#"><i class="fas fa-comment-alt-dots"></i> Comment</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link share-btn" href="#"><i class="fas fa-share"></i> Share</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="card-body border-top px-0 ms-3 me-3">
-                <div class="row">
-                    <div class="col-1">
-                        <img src="~/img/yanz.jpg" class="input-profile-img rounded float-start rounded-circle"/>
-                    </div>
-                    <div class="col-11 ps-0">
-                        <input type="text" class="form-control" placeholder="What's on your mind?"/>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 </div>
 
 <div class="tab-pane fade" id="pills-about" role="tabpanel" aria-labelledby="pills-about-tab">
