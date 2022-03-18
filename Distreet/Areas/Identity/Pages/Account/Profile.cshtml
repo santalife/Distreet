@@ -135,7 +135,7 @@
                     </div>
                 </div>
                 <div class="card-body border-top px-0 ms-3 me-3">
-                    <div class="row gy-2">
+                    <div class="row">
                         <div class="col-1">
                             <img src="@user.ProfilePicture" class="input-profile-img rounded float-start rounded-circle"/>
                         </div>
@@ -145,18 +145,24 @@
                                 <input type="submit" hidden/>
                             </form>
                         </div>
-                        @{
-                            foreach (var comments in post.PostComments)
+
+                        @if (post.PostComments != null)
+                        {
+                            foreach (var comments in post.PostComments.OrderByDescending(e => e.CommentDateTime))
                             {
-                                <div class="col-1">
-                                    <img src="@user.ProfilePicture" class="input-profile-img rounded float-start rounded-circle"/>
-                                </div>
-                                <div class="col-auto ps-0">
-                                    <div class="rounded-pill bg-opacity-50 bg-secondary p-2 px-2 pe-2">@comments.Comment</div>
+                                <div class="row gy-2">
+                                    <div class="col-1">
+                                        <img src="@comments.CommentBy?.ProfilePicture" class="input-profile-img rounded float-start rounded-circle"/>
+                                    </div>
+                                    <div class="col-md-auto ps-0">
+                                        <div class="comment-block bg-opacity-25 bg-dark p-2 px-3 pe-3">
+                                            <h6 class="mb-0"><a class="text-decoration-none fw-bold text-black" asp-area="Identity" asp-page="Profile" asp-route-residentId="@comments.CommentBy?.UserName">@comments.CommentBy?.FullName</a></h6>
+                                            <p class="mb-0">@comments.Comment</p>
+                                        </div>
+                                    </div>
                                 </div>
                             }
                         }
-
                     </div>
                 </div>
             </div>

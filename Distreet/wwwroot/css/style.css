@@ -11765,6 +11765,10 @@ textarea.form-control-lg {
   width: 32px;
 }
 
+.comment-block {
+  border-radius: 18px !important;
+}
+
 .form-signin {
   width: 100%;
   max-width: 330px;

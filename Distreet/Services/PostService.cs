@@ -35,7 +35,7 @@ namespace Distreet.Services
 
         public List<Post> RetrievePostsFromUser(ApplicationUser applicationUser)
         {
-            return _context.Posts
+            List<Post> posts = _context.Posts
                 .Where(e => e.ApplicationUser == applicationUser)
                 .Include(e => e.ApplicationUser)
                 .Include(e=> e.PostImages)
@@ -43,8 +43,23 @@ namespace Distreet.Services
                 .Include(e=> e.PostLikes)
                 .OrderByDescending(e => e.Id)
                 .ToList();
+
+            foreach (var post in posts)
+            {
+                post.PostComments = RetrievePostCommentsFromPost(post);
+            }
+
+            return posts;
         }
 
+        public List<PostComment> RetrievePostCommentsFromPost(Post post)
+        {
+            return _context.PostComments.Where(e => e.Post == post)
+                .Include(e => e.CommentBy)
+                .Include(e => e.CommentReplies)
+                .ToList();
+        }
+        
         public Post RetrievePostFromId(int id)
         {
             return _context.Posts.Where(e => e.Id == id)

@@ -56,7 +56,6 @@ public class Profile : PageModel
     public async Task OnGet(string residentId)
     {
         ApplicationUser = await _userManager.FindByNameAsync(residentId);
-        Console.WriteLine(ApplicationUser.DateOfBirth);
         UserPosts = _postService.RetrievePostsFromUser(ApplicationUser);
     }
 
