@@ -38,11 +38,19 @@ public class Profile : PageModel
         public List<PostImage>? PostImages { get; set; }
     }
     
+    public class CommentModel
+    {
+        public string? CommentContent { get; set; }
+    }
+    
     [BindProperty]
     public List<Post> UserPosts { get; set; }
 
     [BindProperty]
     public InputModel Input { get; set; }
+    
+    [BindProperty]
+    public CommentModel CommentInput { get; set; }
     [BindProperty] public ApplicationUser ApplicationUser { get; set; }
     
     public async Task OnGet(string residentId)
@@ -54,17 +62,16 @@ public class Profile : PageModel
 
     public async Task<RedirectToPageResult> OnPost()
     {
-        Console.WriteLine(Input.PostType);
-        Console.WriteLine(Input.PostContent);
         var user = await _userManager.GetUserAsync(User);
-
-        Post post = new Post
-        {
-            PostType = Input.PostType,
-            PostContent = Input.PostContent,
-            ApplicationUser = user
-        };
-        _postService.CreateStandardPost(post);
+        _postService.CreateStandardPost(Input, user);
+        return RedirectToPage("Profile");
+    }
+    
+    public async Task<RedirectToPageResult> OnPostComment(int id)
+    {
+        Console.WriteLine("I am creating a comment");
+        var user = await _userManager.GetUserAsync(User);
+        _postService.CreateCommentForPost(user, id ,CommentInput);
         return RedirectToPage("Profile");
     }
 }

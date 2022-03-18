@@ -31,7 +31,7 @@ public class UserService
     public ApplicationUser PrepareApplicationUser(Register.InputModel input)
     {
         string latestUsername;
-        var latestuser = _context.DistreetUsers.OrderBy(e => e.Id).FirstOrDefault();
+        var latestuser = _context.DistreetUsers.OrderBy(e => e.UserName).LastOrDefault();
         if (latestuser == null)
         {
             latestUsername = "D0001";
@@ -47,6 +47,7 @@ public class UserService
         input.ProfilePictureJson = PrepareProfilePicture(input.ProfilePictureJson);
         var user = new ApplicationUser
         {
+            FullName = input.FullName,
             UserName = latestUsername, Type = "Normal", Email = input.Email, DateOfBirth = input.DateOfBirth,
             PhoneNumber = input.PhoneNumber, Status = "Reviewing", PointsEarned = 0,
             ProfilePicture = input.ProfilePictureJson

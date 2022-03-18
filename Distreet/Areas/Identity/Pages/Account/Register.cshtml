@@ -123,8 +123,6 @@
 <script src="https://unpkg.com/filepond-plugin-file-metadata/dist/filepond-plugin-file-metadata.js"></script>
 <script src="https://unpkg.com/filepond-plugin-image-transform/dist/filepond-plugin-image-transform.js"></script>
 <script src="https://unpkg.com/filepond-plugin-image-crop/dist/filepond-plugin-image-crop.js"></script>
-<script src="https://unpkg.com/filepond/dist/filepond.js"></script>
-
 
 <script>
     FilePond.registerPlugin(FilePondPluginImagePreview, FilePondPluginFileEncode, FilePondPluginFileMetadata, FilePondPluginImageCrop, FilePondPluginImageTransform);
@@ -133,8 +131,6 @@
 
     profilepicturePond.setOptions({
         maxFiles: 1,
-        allowMultiple: true,
-        allowReorder: true,
         labelIdle: 'Drag & Drop your Photos or <span class="filepond--label-action">Browse</span>',
         allowImageCrop: true,
         allowImageTransform: true,

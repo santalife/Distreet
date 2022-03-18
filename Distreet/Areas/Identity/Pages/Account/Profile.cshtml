@@ -18,7 +18,7 @@
 
     <div class="row mt-4">
         <div class="col d-flex align-items-center justify-content-center">
-            <h2 class="mx-auto">@Model.ApplicationUser.UserName</h2>
+            <h2 class="mx-auto">@Model.ApplicationUser.FullName</h2>
         </div>
     </div>
 
@@ -72,7 +72,7 @@
                 </div>
                 <div class="col-11 ps-0">
                     <form method="post">
-                        <input type="text" class="form-control" placeholder="What's on your mind?" asp-for="Input.PostContent"/>
+                        <input type="text" class="form-control rounded-pill" placeholder="What's on your mind?" asp-for="Input.PostContent"/>
                         <input type="hidden" value="Standard" asp-for="Input.PostType"/>
                         <input type="submit" hidden/>
                     </form>
@@ -106,8 +106,8 @@
                             <img src="@post.ApplicationUser.ProfilePicture" class="input-profile-img rounded float-start rounded-circle"/>
                         </div>
                         <div class="col-11 ps-0">
-                            <h5 class="posts-username mb-0">@post.ApplicationUser.UserName</h5>
-                            <h6 class="text-muted post-date-header">November 9, 2019</h6>
+                            <h5 class="posts-username mb-0">@post.ApplicationUser.FullName</h5>
+                            <h6 class="text-muted post-date-header">@post.PostDateTime.ToString("MMMM dd, yyyy")</h6>
                         </div>
                     </div>
 
@@ -135,13 +135,28 @@
                     </div>
                 </div>
                 <div class="card-body border-top px-0 ms-3 me-3">
-                    <div class="row">
+                    <div class="row gy-2">
                         <div class="col-1">
                             <img src="@user.ProfilePicture" class="input-profile-img rounded float-start rounded-circle"/>
                         </div>
                         <div class="col-11 ps-0">
-                            <input type="text" class="form-control" placeholder="What's on your mind?"/>
+                            <form method="post" asp-route-id="@post.Id" asp-page-handler="comment">
+                                <input type="text" class="form-control rounded-pill" placeholder="What's on your mind?" asp-for="CommentInput.CommentContent"/>
+                                <input type="submit" hidden/>
+                            </form>
                         </div>
+                        @{
+                            foreach (var comments in post.PostComments)
+                            {
+                                <div class="col-1">
+                                    <img src="@user.ProfilePicture" class="input-profile-img rounded float-start rounded-circle"/>
+                                </div>
+                                <div class="col-auto ps-0">
+                                    <div class="rounded-pill bg-opacity-50 bg-secondary p-2 px-2 pe-2">@comments.Comment</div>
+                                </div>
+                            }
+                        }
+
                     </div>
                 </div>
             </div>

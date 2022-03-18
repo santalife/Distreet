@@ -4,6 +4,7 @@ namespace Distreet.Models.User;
 
 public class ApplicationUser: IdentityUser
 {
+    public string? FullName { get; set; }
     public string? Type { get; set; }
     
     public DateTime DateOfBirth { get; set; }
