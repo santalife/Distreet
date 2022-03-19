@@ -35,7 +35,7 @@ public class Profile : PageModel
         public string? PostType { get; set; }
         public string? PostContent { get; set; }
         
-        public List<PostImage>? PostImages { get; set; }
+        public List<string>? PostImages { get; set; }
     }
     
     public class CommentModel
@@ -71,6 +71,14 @@ public class Profile : PageModel
         Console.WriteLine("I am creating a comment");
         var user = await _userManager.GetUserAsync(User);
         _postService.CreateCommentForPost(user, id ,CommentInput);
+        return RedirectToPage("Profile");
+    }
+    
+    public async Task<RedirectToPageResult> OnPostPicture()
+    {
+        Console.WriteLine("I am creating a picture post");
+        var user = await _userManager.GetUserAsync(User);
+        _postService.CreatePicturePost(Input, user);
         return RedirectToPage("Profile");
     }
 }

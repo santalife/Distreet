@@ -11705,6 +11705,11 @@ textarea.form-control-lg {
   height: 38px;
 }
 
+.post-profile-img {
+  width: 55px;
+  height: 55px;
+}
+
 .posting-text {
   font-weight: 750;
 }
@@ -11844,6 +11849,10 @@ body {
   border-left: 1px solid #a4b494;
   border-left-width: 6px;
   border-radius: 0.25rem;
+}
+
+.fs-7 {
+  font-size: 0.75rem;
 }
 
 /*# sourceMappingURL=style.css.map */

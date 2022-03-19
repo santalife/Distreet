@@ -5,6 +5,7 @@ using Distreet.Models;
 using Distreet.Models.User;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json.Linq;
 
 namespace Distreet.Services
 {
@@ -28,6 +29,21 @@ namespace Distreet.Services
                 ApplicationUser = applicationUser,
                 PostDateTime = DateTime.Now,
                 LastUpdated = DateTime.Now
+            };
+            _context.Posts.Add(post);
+            _context.SaveChanges();
+        }
+
+        public void CreatePicturePost(Profile.InputModel input, ApplicationUser applicationUser)
+        {
+            Post post = new Post()
+            {
+                PostType = input.PostType,
+                PostContent = input.PostContent,
+                ApplicationUser = applicationUser,
+                PostDateTime = DateTime.Now,
+                LastUpdated = DateTime.Now,
+                PostImages = PreparePostImages(input)
             };
             _context.Posts.Add(post);
             _context.SaveChanges();
@@ -83,6 +99,33 @@ namespace Distreet.Services
             post.PostComments?.Add(postComment);
             _context.Posts.Update(post);
             _context.SaveChanges();
+        }
+        
+        public static List<PostImage> PreparePostImages(Profile.InputModel input)
+        {
+            List<PostImage> postImages = new List<PostImage>();
+            if (input.PostImages != null && input.PostImages.Count != 0)
+            {
+                foreach (var image in input.PostImages)
+                {
+
+                    JObject jObjectImage = JObject.Parse(image);
+                    string name = (string) jObjectImage["name"];
+                    string data = (string) jObjectImage["data"];
+                    string type = (string) jObjectImage["type"];
+                    string imageString = $"data:{type};base64,{data}";
+
+                    PostImage postImage = new PostImage
+                    {
+                        ImageName = name,
+                        FileType = type,
+                        Image = imageString
+                    };
+                    postImages.Add(postImage);
+                }
+            }
+        
+            return postImages;
         }
     } 
 }

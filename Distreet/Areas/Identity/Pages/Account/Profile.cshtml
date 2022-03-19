@@ -9,6 +9,39 @@
     var user = await UserManager.GetUserAsync(User);
 }
 
+@functions
+{
+    public string GetDateDiff(DateTime date)
+    {
+        var datediff = (DateTime.Now - date).TotalSeconds.ToString();
+        var result = Int32.Parse(datediff.Substring(0, datediff.IndexOf(".")));
+        string followup = "s";
+        if (result > 60)
+        {
+            datediff = (DateTime.Now - date).TotalMinutes.ToString();
+            result = Int32.Parse(datediff.Substring(0, datediff.IndexOf(".")));
+            followup = "min";
+
+            if (result > 60)
+            {
+                datediff = (DateTime.Now - date).TotalHours.ToString();
+                result = Int32.Parse(datediff.Substring(0, datediff.IndexOf(".")));
+                followup = "h";
+
+                if (result > 24)
+                {
+                    datediff = (DateTime.Now - date).TotalDays.ToString();
+                    result = Int32.Parse(datediff.Substring(0, datediff.IndexOf(".")));
+                    followup = "d";
+                }
+            }
+        }
+
+        return result.ToString() + followup;
+    }
+
+}
+
 <div class="profile-header">
     <div class="row">
         <div class="col d-flex align-items-center justify-content-center">
@@ -66,11 +99,11 @@
 <div class="col-7">
     <div class="card shadow border-0">
         <div class="card-body">
-            <div class="row">
-                <div class="col-1">
+            <div class="d-flex">
+                <div class="flex-shrink-0">
                     <img src="@Model.ApplicationUser.ProfilePicture" class="input-profile-img rounded float-start rounded-circle"/>
                 </div>
-                <div class="col-11 ps-0">
+                <div class="flex-grow-1 ms-3">
                     <form method="post">
                         <input type="text" class="form-control rounded-pill" placeholder="What's on your mind?" asp-for="Input.PostContent"/>
                         <input type="hidden" value="Standard" asp-for="Input.PostType"/>
@@ -81,7 +114,7 @@
             <hr/>
             <ul class="nav justify-content-center">
                 <li class="nav-item">
-                    <a class="nav-link posting-text photo-btn" href="#"><i class="fas fa-photo-video"></i> Photo/Video</a>
+                    <a class="nav-link posting-text photo-btn" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fas fa-photo-video"></i> Photo/Video</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link posting-text memories-btn" href="#"><i class="fas fa-stars"></i> Memories</a>
@@ -94,18 +127,63 @@
         </div>
     </div>
 </div>
+<form method="post" asp-page-handler="Picture">
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+            <div class="modal-content">
+                <div class="modal-header text-center">
+                    <h5 class="modal-title fw-bold w-100" id="exampleModalLabel">Create Post</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-header border-bottom-0">
+                    <div class="d-flex">
+                        <div class="flex-shrink-0">
+                            <img src="@user.ProfilePicture" class="post-profile-img rounded float-start rounded-circle"/>
+                        </div>
+                        <div class="flex-grow-1 ms-3">
+                            <h5 class="posts-username mb-0 fs-6 mb-1 fw-bold">@user.FullName</h5>
+                            <select class="form-select form-select-sm" aria-label="Default select example">
+                                <option selected>Public</option>
+                                <option value="Only Me">Only Me</option>
+                                <option value="Friends">Friends</option>
+                            </select>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="modal-body">
+                    <div class="row gy-3">
+                        <div class="col-md-12">
+                            <textarea type="text" rows="3" class="form-control" placeholder="What's on your mind?" asp-for="Input.PostContent"></textarea>
+                            <input type="hidden" value="Photos/Videos" asp-for="Input.PostType"/>
+                        </div>
+                        <div class="col-md-12">
+                            <input type="file" id="input-files" class="filepond" asp-for="Input.PostImages">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer border-top-0">
+                    <button type="submit" class="btn btn-primary w-100 fw-bold">Post</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</form>
 
 @{
     foreach (var post in Model.UserPosts)
     {
-        <div class="col-7 offset-md-5">
+        <div class="col-md-7 offset-md-5">
             <div class="card shadow border-0">
                 <div class="card-body">
-                    <div class="row">
-                        <div class="col-1">
+                    <div class="d-flex">
+                        <div class="flex-shrink-0">
                             <img src="@post.ApplicationUser.ProfilePicture" class="input-profile-img rounded float-start rounded-circle"/>
                         </div>
-                        <div class="col-11 ps-0">
+                        <div class="flex-grow-1 ms-3">
                             <h5 class="posts-username mb-0">@post.ApplicationUser.FullName</h5>
                             <h6 class="text-muted post-date-header">@post.PostDateTime.ToString("MMMM dd, yyyy")</h6>
                         </div>
@@ -119,6 +197,12 @@
                         </div>
                     </div>
                 </div>
+                @{
+                    if (post.PostImages != null)
+                    {
+                        <img src="@post.PostImages.FirstOrDefault()?.Image" alt=""/>
+                    }
+                }
                 <div class="card-body border-top border-top px-0 ms-3 me-3">
                     <div class="post-btn-section">
                         <ul class="nav nav-pills nav-justified">
@@ -136,28 +220,44 @@
                 </div>
                 <div class="card-body border-top px-0 ms-3 me-3">
                     <div class="row">
-                        <div class="col-1">
-                            <img src="@user.ProfilePicture" class="input-profile-img rounded float-start rounded-circle"/>
+                        <div class="d-flex">
+                            <div class="flex-shrink-0">
+                                <img src="@user.ProfilePicture" class="input-profile-img rounded float-start rounded-circle"/>
+                            </div>
+                            <div class="flex-grow-1 ms-3">
+                                <form method="post" asp-route-id="@post.Id" asp-page-handler="comment">
+                                    <input type="text" class="form-control rounded-pill" placeholder="What's on your mind?" asp-for="CommentInput.CommentContent"/>
+                                    <input type="submit" hidden/>
+                                </form>
+                            </div>
                         </div>
-                        <div class="col-11 ps-0">
-                            <form method="post" asp-route-id="@post.Id" asp-page-handler="comment">
-                                <input type="text" class="form-control rounded-pill" placeholder="What's on your mind?" asp-for="CommentInput.CommentContent"/>
-                                <input type="submit" hidden/>
-                            </form>
-                        </div>
+
 
                         @if (post.PostComments != null)
                         {
                             foreach (var comments in post.PostComments.OrderByDescending(e => e.CommentDateTime))
                             {
-                                <div class="row gy-2">
-                                    <div class="col-1">
-                                        <img src="@comments.CommentBy?.ProfilePicture" class="input-profile-img rounded float-start rounded-circle"/>
+                                <div class="d-flex mt-3">
+                                    <div class="flex-shrink-0">
+                                        <img src="@comments.CommentBy.ProfilePicture" class="input-profile-img rounded float-start rounded-circle"/>
                                     </div>
-                                    <div class="col-md-auto ps-0">
-                                        <div class="comment-block bg-opacity-25 bg-dark p-2 px-3 pe-3">
-                                            <h6 class="mb-0"><a class="text-decoration-none fw-bold text-black" asp-area="Identity" asp-page="Profile" asp-route-residentId="@comments.CommentBy?.UserName">@comments.CommentBy?.FullName</a></h6>
-                                            <p class="mb-0">@comments.Comment</p>
+                                    <div class="flex-grow-1 ms-4">
+                                        <div class="row gy-2">
+                                            <div class="col-md-auto ps-1">
+                                                <div class="comment-block bg-opacity-25 bg-dark p-2 px-3 pe-3 w-auto">
+                                                    <div class="col-md-auto ps-0">
+                                                        <h6 class="mb-0">
+                                                            <a class="text-decoration-none fw-bold text-black" asp-area="Identity" asp-page="Profile" asp-route-residentId="@comments.CommentBy?.UserName">@comments.CommentBy?.FullName</a>
+                                                        </h6>
+                                                        <p class="mb-0">@comments.Comment</p>
+                                                    </div>
+                                                </div>
+                                                <ul class="list-inline fs-7 ps-3 mb-0">
+                                                    <li class="list-inline-item fw-bold">Like</li>
+                                                    <li class="list-inline-item fw-bold">Reply</li>
+                                                    <li class="list-inline-item">@GetDateDiff(comments.CommentDateTime)</li>
+                                                </ul>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -621,3 +721,25 @@
 
 </div>
 </div>
+
+<script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
+<script src="https://unpkg.com/filepond-plugin-file-encode/dist/filepond-plugin-file-encode.js"></script>
+<script src="https://unpkg.com/filepond-plugin-file-metadata/dist/filepond-plugin-file-metadata.js"></script>
+<script src="https://unpkg.com/filepond-plugin-image-transform/dist/filepond-plugin-image-transform.js"></script>
+<script src="https://unpkg.com/filepond-plugin-image-crop/dist/filepond-plugin-image-crop.js"></script>
+
+<script>
+    FilePond.registerPlugin(FilePondPluginImagePreview, FilePondPluginFileEncode, FilePondPluginFileMetadata, FilePondPluginImageCrop, FilePondPluginImageTransform);
+    const filesElem = document.querySelector('#input-files');
+    const filesPond= FilePond.create(filesElem);
+
+    filesPond.setOptions({
+        maxFiles: 10,
+        allowMultiple: true,
+        labelIdle: 'Drag & Drop your Photos or <span class="filepond--label-action">Browse</span>',
+        allowImageCrop: true,
+        allowImageTransform: true,
+        imageCropAspectRatio: '1:1',
+    });
+    
+</script>
