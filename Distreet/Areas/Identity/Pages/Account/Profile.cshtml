@@ -57,7 +57,7 @@
 
     <div class="row mt-2">
         <div class="col d-flex align-items-center justify-content-center">
-            <button type="button" class="btn btn-secondary"><i class="fas fa-edit"></i> Edit Profile</button>
+            <a asp-area="Identity" asp-page="EditProfile" class="btn btn-secondary fw-bold"><i class="fas fa-edit"></i> Edit Profile</a>
         </div>
     </div>
 </div>
@@ -127,7 +127,7 @@
         </div>
     </div>
 </div>
-<form method="post" asp-page-handler="Picture">
+<form method="post" asp-page-handler="Picture" class="m-0 p-0">
 
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
@@ -197,27 +197,136 @@
                         </div>
                     </div>
                 </div>
+
                 @{
-                    if (post.PostImages != null)
+                    if (post.PostType == "Photos/Videos")
                     {
-                        <img src="@post.PostImages.FirstOrDefault()?.Image" alt=""/>
+                        <a href="" data-bs-toggle="modal" data-bs-target="#post-modal-@post.Id">
+                            <img class="w-100" src="@post.PostImages.FirstOrDefault()?.Image" alt=""/>
+                        </a>
+                        <div class="modal fade" id="post-modal-@post.Id" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered modal-fullscreen">
+                                <div class="modal-content">
+                                    <div class="modal-header border-bottom-0">
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="row">
+                                            <div class="col-md-9 d-flex justify-content-center">
+                                                <img class="" src="@post.PostImages.FirstOrDefault()?.Image" alt=""/>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="d-flex">
+                                                    <div class="flex-shrink-0">
+                                                        <img src="@post.ApplicationUser.ProfilePicture" class="input-profile-img rounded float-start rounded-circle"/>
+                                                    </div>
+                                                    <div class="flex-grow-1 ms-3">
+                                                        <h5 class="posts-username mb-0">@post.ApplicationUser.FullName</h5>
+                                                        <h6 class="text-muted post-date-header">@post.PostDateTime.ToString("MMMM dd, yyyy")</h6>
+                                                    </div>
+                                                </div>
+                                                <div class="row mt-1">
+                                                    <div class="col">
+                                                        <p class="mb-0 fs-4">
+                                                            @post.PostContent
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <div class="post-btn-section mt-3 pt-2 pb-2 border-top border-bottom">
+                                                    <ul class="nav nav-pills nav-justified">
+                                                        <li class="nav-item">
+                                                            <a class="btn btn-outline-danger w-100 border-0 fw-bold" aria-current="page" href="#"><i class="fas fa-thumbs-up"></i> Like</a>
+                                                        </li>
+                                                        <li class="nav-item">
+                                                            <a class="btn btn-outline-success w-100 border-0 fw-bold" href="#"><i class="fas fa-comment-alt-dots"></i> Comment</a>
+                                                        </li>
+                                                        <li class="nav-item">
+                                                            <a class="btn btn-outline-info w-100 border-0 fw-bold" href="#"><i class="fas fa-share"></i> Share</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <div class="d-flex mt-3">
+                                                    <div class="flex-shrink-0">
+                                                        <img src="@user.ProfilePicture" class="input-profile-img rounded float-start rounded-circle"/>
+                                                    </div>
+                                                    <div class="flex-grow-1 ms-3">
+                                                        <form method="post" asp-route-id="@post.Id" asp-page-handler="comment">
+                                                            <input type="text" class="form-control rounded-pill" placeholder="What's on your mind?" asp-for="CommentInput.CommentContent"/>
+                                                            <input type="submit" hidden/>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                                @if (post.PostComments != null)
+                                                {
+                                                    foreach (var comments in post.PostComments.OrderByDescending(e => e.CommentDateTime))
+                                                    {
+                                                        <div class="d-flex mt-3">
+                                                            <div class="flex-shrink-0">
+                                                                <img src="@comments.CommentBy.ProfilePicture" class="input-profile-img rounded float-start rounded-circle"/>
+                                                            </div>
+                                                            <div class="flex-grow-1 ms-4">
+                                                                <div class="row gy-2">
+                                                                    <div class="col-md-auto ps-1">
+                                                                        <div class="comment-block bg-opacity-25 bg-dark p-2 px-3 pe-3 w-auto">
+                                                                            <div class="col-md-auto ps-0">
+                                                                                <h6 class="mb-0">
+                                                                                    <a class="text-decoration-none fw-bold text-black" asp-area="Identity" asp-page="Profile" asp-route-residentId="@comments.CommentBy?.UserName">@comments.CommentBy?.FullName</a>
+                                                                                </h6>
+                                                                                <p class="mb-0">@comments.Comment</p>
+                                                                            </div>
+                                                                        </div>
+                                                                        <ul class="list-inline fs-7 ps-3 mb-0">
+                                                                            <li class="list-inline-item fw-bold">Like</li>
+                                                                            <li class="list-inline-item fw-bold">Reply</li>
+                                                                            <li class="list-inline-item">@GetDateDiff(comments.CommentDateTime)</li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    }
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body border-top-0 px-0 ms-3 me-3">
+                            <div class="post-btn-section">
+                                <ul class="nav nav-pills nav-justified">
+                                    <li class="nav-item">
+                                        <a class="btn btn-outline-danger w-100 border-0 fw-bold" aria-current="page" href="#"><i class="fas fa-thumbs-up"></i> Like</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="btn btn-outline-success w-100 border-0 fw-bold" href="#"><i class="fas fa-comment-alt-dots"></i> Comment</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="btn btn-outline-info w-100 border-0 fw-bold" href="#"><i class="fas fa-share"></i> Share</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="card-body border-top px-0 ms-3 me-3">
+                            <div class="post-btn-section">
+                                <ul class="nav nav-pills nav-justified">
+                                    <li class="nav-item">
+                                        <a class="btn btn-outline-danger w-100 border-0 fw-bold" aria-current="page" href="#"><i class="fas fa-thumbs-up"></i> Like</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="btn btn-outline-success w-100 border-0 fw-bold" href="#"><i class="fas fa-comment-alt-dots"></i> Comment</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="btn btn-outline-info w-100 border-0 fw-bold" href="#"><i class="fas fa-share"></i> Share</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
                     }
                 }
-                <div class="card-body border-top border-top px-0 ms-3 me-3">
-                    <div class="post-btn-section">
-                        <ul class="nav nav-pills nav-justified">
-                            <li class="nav-item">
-                                <a class="btn btn-outline-danger w-100 border-0 fw-bold" aria-current="page" href="#"><i class="fas fa-thumbs-up"></i> Like</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="btn btn-outline-success w-100 border-0 fw-bold" href="#"><i class="fas fa-comment-alt-dots"></i> Comment</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="btn btn-outline-info w-100 border-0 fw-bold" href="#"><i class="fas fa-share"></i> Share</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
                 <div class="card-body border-top px-0 ms-3 me-3">
                     <div class="row">
                         <div class="d-flex">
@@ -524,7 +633,7 @@
                                 <div class="d-flex gap-2 w-100 justify-content-between">
                                     <div>
                                         <h6 class="mb-0">Phone Number</h6>
-                                        <p class="mb-0 opacity-75">82661667</p>
+                                        <p class="mb-0 opacity-75">@user.PhoneNumber</p>
                                     </div>
                                 </div>
                             </a>
@@ -718,7 +827,6 @@
 </div>
 
 <div class="tab-pane fade" id="pills-more" role="tabpanel" aria-labelledby="pills-more-tab">
-
 </div>
 </div>
 
